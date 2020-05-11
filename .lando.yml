@@ -1,0 +1,4 @@
+name: marshall-wealth-management
+recipe: drupal8
+config:
+  webroot: web/
