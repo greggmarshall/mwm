@@ -1,6 +1,6 @@
-name: Drupal 8 Parallax Theme
+name: Marshall Wealth Management Theme
 type: theme
-description: 'Designed & Developed by <a href=http://www.zymphonies.com>Zymphonies</a><br/>Contact us for any kind of Drupal services <a href=mailto:info@zymphonies.com>info@zymphonies.com</a>'
+description: 'Custom theme for Marshall Wealth Management'
 package: core
 # core: 8.x
 
@@ -58,14 +58,3 @@ regions:
   footer_third: 'Footer third widget'
 
   auto_hidden_block: 'Auto hidden blocks'
-# Information added by Drupal.org packaging script on 2017-01-11
-# version: '8.x-1.0'
-# core: '8.x'
-# project: 'mwm'
-# datestamp: 1484152688
-
-# Information added by Drupal.org packaging script on 2019-05-09
-version: '8.x-1.8'
-core: '8.x'
-project: 'mwm'
-datestamp: 1557415385
