@@ -39,15 +39,17 @@
 	display: inline-block;
 	vertical-align: middle;
 	color: $headerTextColor;
+	font: $headerTextfamily;
 	line-height: 120%;
 	font-size: 1.5em;
 
-	a{	
-		padding: 3px;
+	a{
+		padding: 0px;
 		display: inline-block;
 
 		img{
 			vertical-align: middle;
+			height: 100px;
 		}
 	}
 
@@ -61,7 +63,7 @@
 	.block{
 		margin: 5px 0;
 	}
-	
+
 	p{
 		margin: 0;
 		line-height: 120%;
@@ -84,7 +86,7 @@
 	display: table;
 	width: 100%;
 
-	.form-item, 
+	.form-item,
 	.form-actions{
 		display: table-cell;
 		vertical-align: top;
