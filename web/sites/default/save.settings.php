@@ -105,16 +105,6 @@ $databases = [];
  * webserver.  For most other drivers, you must specify a
  * username, password, host, and database name.
  *
- * Drupal core implements drivers for mysql, pgsql, and sqlite. Other drivers
- * can be provided by contributed or custom modules. To use a contributed or
- * custom driver, the "namespace" property must be set to the namespace of the
- * driver. The code in this namespace must be autoloadable prior to connecting
- * to the database, and therefore, prior to when module root namespaces are
- * added to the autoloader. To add the driver's namespace to the autoloader,
- * set the "autoload" property to the PSR-4 base directory of the driver's
- * namespace. This is optional for projects managed with Composer if the
- * driver's namespace is in Composer's autoloader.
- *
  * Transaction support is enabled by default for all drivers that support it,
  * including MySQL. To explicitly disable it, set the 'transactions' key to
  * FALSE.
@@ -234,20 +224,6 @@ $databases = [];
  *     'database' => '/path/to/databasefilename',
  *   ];
  * @endcode
- *
- * Sample Database configuration format for a driver in a contributed module:
- * @code
- *   $databases['default']['default'] = [
- *     'driver' => 'mydriver',
- *     'namespace' => 'Drupal\mymodule\Driver\Database\mydriver',
- *     'autoload' => 'modules/mymodule/src/Driver/Database/mydriver/',
- *     'database' => 'databasename',
- *     'username' => 'sqlusername',
- *     'password' => 'sqlpassword',
- *     'host' => 'localhost',
- *     'prefix' => '',
- *   ];
- * @endcode
  */
 
 /**
@@ -261,7 +237,7 @@ $databases = [];
  * directory in the public files path. The setting below allows you to set
  * its location.
  */
-# $settings['config_sync_directory'] = '/directory/outside/webroot';
+$settings['config_sync_directory'] = '../config/default';
 
 /**
  * Settings:
@@ -290,7 +266,7 @@ $databases = [];
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-$settings['hash_salt'] = '';
+$settings['hash_salt'] = '4ySQNj6o4f53UY4xWSaOtexDHvuyZFM27-6NumH8BC7uQwObD1MEcQbu2FGjBgOg9blota64Hw';
 
 /**
  * Deployment identifier.
@@ -766,19 +742,6 @@ $settings['entity_update_batch_size'] = 50;
 $settings['entity_update_backup'] = TRUE;
 
 /**
- * Node migration type.
- *
- * This is used to force the migration system to use the classic node migrations
- * instead of the default complete node migrations. The migration system will
- * use the classic node migration only if there are existing migrate_map tables
- * for the classic node migrations and they contain data. These tables may not
- * exist if you are developing custom migrations and do not want to use the
- * complete node migrations. Set this to TRUE to force the use of the classic
- * node migrations.
- */
-$settings['migrate_node_migrate_type_classic'] = FALSE;
-
-/**
  * Load local development override configuration, if available.
  *
  * Use settings.local.php to override variables on secondary (staging,
@@ -792,3 +755,42 @@ $settings['migrate_node_migrate_type_classic'] = FALSE;
 # if (file_exists($app_root . '/' . $site_path . '/settings.local.php')) {
 #   include $app_root . '/' . $site_path . '/settings.local.php';
 # }
+// Local development configuration.
+if (!defined('PANTHEON_ENVIRONMENT')) {
+  // Database.
+  $databases['default']['default'] = array (
+    'database' => 'drupal8',
+    'username' => 'drupal8',
+    'password' => 'drupal8',
+    'prefix' => '',
+    'host' => 'database',
+    'port' => '3306',
+    'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+    'driver' => 'mysql',
+  );
+}
+$settings['tome_static_directory'] = 'sites/default/files/private/tome_static';
+// Pantheon configuration
+/**
+ * Load services definition file.
+ */
+$settings['container_yamls'][] = __DIR__ . '/services.yml';
+
+/**
+ * Include the Pantheon-specific settings file.
+ *
+ * n.b. The settings.pantheon.php file makes some changes
+ *      that affect all envrionments that this site
+ *      exists in.  Always include this file, even in
+ *      a local development environment, to insure that
+ *      the site settings remain consistent.
+ */
+include __DIR__ . "/settings.pantheon.php";
+
+/**
+ * If there is a local settings file, then include it
+ */
+$local_settings = __DIR__ . "/settings.local.php";
+if (file_exists($local_settings)) {
+  include $local_settings;
+}

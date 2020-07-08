@@ -24,7 +24,7 @@
         "drupal/contact_storage": "^1.0",
         "drupal/core-composer-scaffold": "^8.8",
         "drupal/core-project-message": "^8.8",
-        "drupal/core-recommended": "^8.8",
+        "drupal/core-recommended": "8.9.1",
         "drupal/crop": "^2.1",
         "drupal/drupal8_parallax_theme": "^1.8",
         "drupal/focal_point": "^1.4",
